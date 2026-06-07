@@ -8,12 +8,12 @@ import {
 	text,
 	timestamp
 } from 'drizzle-orm/pg-core';
-import { user } from './auth.schema';
-import { client } from './client.schema';
-import { service } from './service.schema';
-import { area } from './coverage.schema';
+import { users } from './auth.schema';
+import { clients } from './client.schema';
+import { services } from './service.schema';
+import { areas } from './coverage.schema';
 
-export const uom = pgTable('uom', {
+export const uoms = pgTable('uoms', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -21,10 +21,10 @@ export const uom = pgTable('uom', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	title: text('title'),
 	rounding_treshold: real('rounding_treshold').default(0),
 	isMain: boolean('is_main').default(false),
@@ -33,7 +33,7 @@ export const uom = pgTable('uom', {
 	weight_based: boolean('weight_based').default(true)
 });
 
-export const commodity = pgTable('commodity', {
+export const commodities = pgTable('commodities', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -41,15 +41,15 @@ export const commodity = pgTable('commodity', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull(),
 	description: text('description')
 });
 
-export const insurance = pgTable('insurance', {
+export const insurances = pgTable('insurances', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -57,16 +57,16 @@ export const insurance = pgTable('insurance', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull(),
 	description: text('description'),
 	rate: real('rate')
 });
 
-export const packaging = pgTable('packaging', {
+export const packagings = pgTable('packagings', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -74,17 +74,17 @@ export const packaging = pgTable('packaging', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull(),
 	description: text('description'),
 	isWhole: boolean('is_whole').default(false),
 	rate: real('rate')
 });
 
-export const shipmentStatus = pgTable('shipment_status', {
+export const shipmentStatuses = pgTable('shipment_statuses', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -92,17 +92,17 @@ export const shipmentStatus = pgTable('shipment_status', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull(),
 	code: text('code').notNull().unique(),
 	order: integer('order').notNull(),
 	description: text('description')
 });
 
-export const shipment = pgTable('shipment', {
+export const shipments = pgTable('shipments', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -110,25 +110,25 @@ export const shipment = pgTable('shipment', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	number: text('number').notNull().unique(),
 	date: date('date').notNull().defaultNow(),
-	clientId: integer('client_id').references(() => client.id),
+	clientId: integer('client_id').references(() => clients.id),
 	serviceId: integer('service_id')
 		.notNull()
-		.references(() => service.id),
+		.references(() => services.id),
 	originAreaId: integer('origin_area_id')
 		.notNull()
-		.references(() => area.id),
+		.references(() => areas.id),
 	destinationAreaId: integer('destination_area_id')
 		.notNull()
-		.references(() => area.id),
+		.references(() => areas.id),
 	commodityId: integer('commodity_id')
 		.notNull()
-		.references(() => commodity.id),
+		.references(() => commodities.id),
 	remarks: text('remarks'),
 	gwt: real('gwt').notNull(),
 	cwt: real('cwt'),
@@ -136,11 +136,11 @@ export const shipment = pgTable('shipment', {
 	qty: integer('item_qty').notNull(),
 	statusId: integer('status_id')
 		.notNull()
-		.references(() => shipmentStatus.id),
+		.references(() => shipmentStatuses.id),
 	cnUrl: text('cn_url').notNull()
 });
 
-export const shipmentParty = pgTable('shipment_party', {
+export const shipmentParties = pgTable('shipment_parties', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -148,13 +148,13 @@ export const shipmentParty = pgTable('shipment_party', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	shipmentId: integer('shipment_id')
 		.notNull()
-		.references(() => shipment.id),
+		.references(() => shipments.id),
 	role: integer('role').notNull(),
 	name: text('name').notNull(),
 	address1: text('address1').notNull(),
@@ -162,12 +162,12 @@ export const shipmentParty = pgTable('shipment_party', {
 	address3: text('address3'),
 	areaId: integer('area_id')
 		.notNull()
-		.references(() => area.id),
+		.references(() => areas.id),
 	phone: text('phone').notNull(),
 	email: text('email')
 });
 
-export const shipmentItem = pgTable('shipment_item', {
+export const shipmentItems = pgTable('shipment_items', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -175,23 +175,23 @@ export const shipmentItem = pgTable('shipment_item', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	shipmentId: integer('shipment_id')
 		.notNull()
-		.references(() => shipment.id),
+		.references(() => shipments.id),
 	number: text('number').notNull(),
 	description: text('description').notNull(),
 	uomId: integer('uom_id')
 		.notNull()
-		.references(() => uom.id),
+		.references(() => uoms.id),
 	gwt: real('gwt').notNull(),
 	cwt: real('cwt'),
 	l: real('l').default(1),
 	w: real('w').default(1),
 	h: real('h').default(1),
 	volume: real('volumne'),
-	packagingId: integer('packaging_id').references(() => packaging.id)
+	packagingId: integer('packaging_id').references(() => packagings.id)
 });

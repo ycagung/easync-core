@@ -7,11 +7,11 @@ import {
 	time,
 	timestamp
 } from 'drizzle-orm/pg-core';
-import { user } from './auth.schema';
-import { branch } from './coverage.schema';
-import { driver, fleet } from './fleet.schema';
+import { users } from './auth.schema';
+import { branches } from './coverage.schema';
+import { drivers, fleets } from './fleet.schema';
 
-export const route = pgTable('route', {
+export const routes = pgTable('routes', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -19,30 +19,30 @@ export const route = pgTable('route', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	code: text('code').notNull().unique(),
 	name: text('name').notNull()
 });
 
-export const routeSegment = pgTable('route_segment', {
+export const routeSegments = pgTable('route_segments', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	routeId: integer('route_id')
 		.notNull()
-		.references(() => route.id),
+		.references(() => routes.id),
 	order: integer('order').notNull(),
 	branchId: integer('branch_id')
 		.notNull()
-		.references(() => branch.id)
+		.references(() => branches.id)
 });
 
-export const trip = pgTable('trip', {
+export const trips = pgTable('trips', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -50,18 +50,18 @@ export const trip = pgTable('trip', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	routeId: integer('route_id')
 		.notNull()
-		.references(() => route.id),
+		.references(() => routes.id),
 	departureDate: date('departure_date').notNull(),
 	departureTime: time('departure_time').notNull(),
 	arrivalDate: date('arrival_date'),
 	arrivalTime: time('arrival_time'),
-	driverId: integer('driver_id').references(() => driver.id),
-	fleetId: integer('fleet_id').references(() => fleet.id),
+	driverId: integer('driver_id').references(() => drivers.id),
+	fleetId: integer('fleet_id').references(() => fleets.id),
 	status: text('status').notNull().default('draft')
 });

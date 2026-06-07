@@ -1,106 +1,107 @@
 import { relations } from 'drizzle-orm';
+import { accounts, sessions, users } from './schema/auth.schema';
 import {
-	account,
-	session,
-	user,
-	area,
-	areaLevel,
-	branch,
-	branch_coverage,
-	port,
-	portCoverage,
-	portType
-} from './schema';
+	areaLevels,
+	areas,
+	branch_coverages,
+	branches,
+	portCoverages,
+	ports,
+	portTypes
+} from './schema/coverage.schema';
 
 // --- Auth Relations ---
-export const userRelations = relations(user, ({ many }) => ({
-	sessions: many(session),
-	accounts: many(account)
+export const usersRelations = relations(users, ({ many }) => ({
+	sessions: many(sessions),
+	accounts: many(accounts)
 }));
 
-export const sessionRelations = relations(session, ({ one }) => ({
-	user: one(user, {
-		fields: [session.userId],
-		references: [user.id]
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+	user: one(users, {
+		fields: [sessions.userId],
+		references: [users.id]
 	})
 }));
 
-export const accountRelations = relations(account, ({ one }) => ({
-	user: one(user, {
-		fields: [account.userId],
-		references: [user.id]
+export const accountsRelations = relations(accounts, ({ one }) => ({
+	user: one(users, {
+		fields: [accounts.userId],
+		references: [users.id]
 	})
 }));
 
 // --- Area Level Relations ---
-export const areaLevelRelations = relations(areaLevel, ({ many }) => ({
-	areas: many(area)
+export const areaLevelsRelations = relations(areaLevels, ({ many }) => ({
+	areas: many(areas)
 }));
 
 // --- Area Relations ---
-export const areaRelations = relations(area, ({ one, many }) => ({
-	level: one(areaLevel, {
-		fields: [area.levelId],
-		references: [areaLevel.id]
+export const areasRelations = relations(areas, ({ one, many }) => ({
+	level: one(areaLevels, {
+		fields: [areas.levelId],
+		references: [areaLevels.id]
 	}),
 	// Self-referencing relation for parent/child areas
-	parent: one(area, {
-		fields: [area.parentId],
-		references: [area.id],
+	parent: one(areas, {
+		fields: [areas.parentId],
+		references: [areas.id],
 		relationName: 'areaHierarchy'
 	}),
-	children: many(area, {
+	children: many(areas, {
 		relationName: 'areaHierarchy'
 	})
 }));
 
 // --- Port Type Relations ---
-export const portTypeRelations = relations(portType, ({ many }) => ({
-	ports: many(port)
+export const portTypesRelations = relations(portTypes, ({ many }) => ({
+	ports: many(ports)
 }));
 
 // --- Port Relations ---
-export const portRelations = relations(port, ({ one, many }) => ({
-	type: one(portType, {
-		fields: [port.type],
-		references: [portType.id]
+export const portsRelations = relations(ports, ({ one, many }) => ({
+	type: one(portTypes, {
+		fields: [ports.type],
+		references: [portTypes.id]
 	}),
-	area: one(area, {
-		fields: [port.areaId],
-		references: [area.id]
+	area: one(areas, {
+		fields: [ports.areaId],
+		references: [areas.id]
 	}),
-	coverages: many(portCoverage)
+	coverages: many(portCoverages)
 }));
 
 // --- Port Coverage Relations ---
-export const portCoverageRelations = relations(portCoverage, ({ one }) => ({
-	port: one(port, {
-		fields: [portCoverage.portId],
-		references: [port.id]
+export const portCoveragesRelations = relations(portCoverages, ({ one }) => ({
+	port: one(ports, {
+		fields: [portCoverages.portId],
+		references: [ports.id]
 	}),
-	area: one(area, {
-		fields: [portCoverage.areaId],
-		references: [area.id]
+	area: one(areas, {
+		fields: [portCoverages.areaId],
+		references: [areas.id]
 	})
 }));
 
 // --- Branch Relations ---
-export const branchRelations = relations(branch, ({ one, many }) => ({
-	area: one(area, {
-		fields: [branch.areaId],
-		references: [area.id]
+export const branchesRelations = relations(branches, ({ one, many }) => ({
+	area: one(areas, {
+		fields: [branches.areaId],
+		references: [areas.id]
 	}),
-	coverages: many(branch_coverage)
+	coverages: many(branch_coverages)
 }));
 
 // --- Branch Coverage Relations ---
-export const branchCoverageRelations = relations(branch_coverage, ({ one }) => ({
-	branch: one(branch, {
-		fields: [branch_coverage.branchId],
-		references: [branch.id]
-	}),
-	area: one(area, {
-		fields: [branch_coverage.areaId],
-		references: [area.id]
+export const branchCoveragesRelations = relations(
+	branch_coverages,
+	({ one }) => ({
+		branch: one(branches, {
+			fields: [branch_coverages.branchId],
+			references: [branches.id]
+		}),
+		area: one(areas, {
+			fields: [branch_coverages.areaId],
+			references: [areas.id]
+		})
 	})
-}));
+);

@@ -8,9 +8,9 @@ import {
 	text,
 	timestamp
 } from 'drizzle-orm/pg-core';
-import { user } from './auth.schema';
+import { users } from './auth.schema';
 
-export const client = pgTable('client', {
+export const clients = pgTable('clients', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -18,10 +18,10 @@ export const client = pgTable('client', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	title: text('title'),
 	name: text('name').notNull(),
 	phone: text('phone').notNull(),
@@ -38,20 +38,20 @@ export const taxCredentials = pgTable('tax_credentials', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	nik: text('nik').notNull(),
 	npwp: text('npwp').notNull(),
 	address: text('address').notNull(),
 	clientId: integer('client_id')
 		.notNull()
-		.references(() => client.id),
+		.references(() => clients.id),
 	isPrimary: boolean('is_primary').default(false)
 });
 
-export const contract = pgTable('contract', {
+export const contracts = pgTable('contracts', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -59,14 +59,14 @@ export const contract = pgTable('contract', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	number: text('number').notNull().unique(),
 	clientId: integer('client_id')
 		.notNull()
-		.references(() => client.id),
+		.references(() => clients.id),
 	beginsAt: date('begins_at').notNull(),
 	endsAt: date('ends_at'),
 	description: text('description'),

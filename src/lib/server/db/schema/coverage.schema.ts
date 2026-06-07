@@ -8,9 +8,9 @@ import {
 	timestamp,
 	type AnyPgColumn
 } from 'drizzle-orm/pg-core';
-import { user } from './auth.schema';
+import { users } from './auth.schema';
 
-export const areaLevel = pgTable('area_level', {
+export const areaLevels = pgTable('area_levels', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -18,14 +18,14 @@ export const areaLevel = pgTable('area_level', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull()
 });
 
-export const area = pgTable('area', {
+export const areas = pgTable('areas', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -33,18 +33,18 @@ export const area = pgTable('area', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull(),
 	levelId: integer('level_id')
 		.notNull()
-		.references(() => areaLevel.id),
-	parentId: integer('parent_id').references((): AnyPgColumn => area.id)
+		.references(() => areaLevels.id),
+	parentId: integer('parent_id').references((): AnyPgColumn => areas.id)
 });
 
-export const portType = pgTable('port_type', {
+export const portTypes = pgTable('port_types', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -52,14 +52,14 @@ export const portType = pgTable('port_type', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull()
 });
 
-export const port = pgTable('port', {
+export const ports = pgTable('ports', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -67,34 +67,34 @@ export const port = pgTable('port', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
-	type: integer('type_id').references(() => portType.id),
+		.references(() => users.id),
+	type: integer('type_id').references(() => portTypes.id),
 	name: text('name').notNull(),
 	code: text('code').notNull(),
 	latitude: numeric('latitude'),
 	longitude: numeric('longitude'),
 	address: text('address'),
-	areaId: integer('area_id').references(() => area.id)
+	areaId: integer('area_id').references(() => areas.id)
 });
 
-export const portCoverage = pgTable('port_coverage', {
+export const portCoverages = pgTable('port_coverages', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	portId: integer('port_id')
 		.notNull()
-		.references(() => port.id),
+		.references(() => ports.id),
 	areaId: integer('area_id')
 		.notNull()
-		.references(() => area.id)
+		.references(() => areas.id)
 });
 
-export const branch = pgTable('branch', {
+export const branches = pgTable('branches', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	updatedAt: timestamp()
@@ -102,10 +102,10 @@ export const branch = pgTable('branch', {
 		.$onUpdate(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	updatedBy: text('updated_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	name: text('name').notNull(),
 	code: text('code').notNull(),
 	address: text('address'),
@@ -113,21 +113,21 @@ export const branch = pgTable('branch', {
 	longitude: numeric('longitude'),
 	areaId: integer('area_id')
 		.notNull()
-		.references(() => area.id)
+		.references(() => areas.id)
 });
 
-export const branch_coverage = pgTable('branch_coverage', {
+export const branch_coverages = pgTable('branch_coverages', {
 	id: serial('id').primaryKey(),
 	createdAt: timestamp().defaultNow(),
 	createdBy: text('created_by')
 		.notNull()
-		.references(() => user.id),
+		.references(() => users.id),
 	branchId: integer('branch_id')
 		.notNull()
-		.references(() => branch.id),
+		.references(() => branches.id),
 	areaId: integer('area_id')
 		.notNull()
-		.references(() => area.id),
+		.references(() => areas.id),
 	delivery: boolean('delivery').default(true),
 	pickup: boolean('pickup').default(true)
 });
