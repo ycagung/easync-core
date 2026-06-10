@@ -4,43 +4,44 @@
 /* Updated to match your specific brand typography */
 @import '@fontsource/noto-sans';
 @import '@fontsource/cormorant-garamond';
+@import '@fontsource-variable/inter';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   /* LIGHT MODE (Parchment inverted for root) */
-  --background: oklch(0.924 0.023 94.6); /* #F0EAD6 - Parchment */
-  --foreground: oklch(0.168 0.004 278);  /* #0E0E10 - Obsidian */
-  
-  --card: oklch(0.98 0.01 94.6); /* Near white parchment */
-  --card-foreground: oklch(0.168 0.004 278);
-  
-  --popover: oklch(0.98 0.01 94.6);
-  --popover-foreground: oklch(0.168 0.004 278);
-  
+  --background: oklch(1 0 0); /* #F0EAD6 - Parchment */
+  --foreground: oklch(0.145 0 0); /* #0E0E10 - Obsidian */
+
+  --card: oklch(1 0 0); /* Near white parchment */
+  --card-foreground: oklch(0.145 0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+
   /* Primary mapped to Gold Mid for light mode contrast */
-  --primary: oklch(0.725 0.165 85.2); /* #D4A017 */
-  --primary-foreground: oklch(0.168 0.004 278);
-  
-  --secondary: oklch(0.88 0.02 94.6); 
-  --secondary-foreground: oklch(0.168 0.004 278);
-  
-  --muted: oklch(0.88 0.02 94.6);
-  --muted-foreground: oklch(0.55 0.01 90); /* #7A7875 - Text Muted */
-  
-  --accent: oklch(0.88 0.02 94.6);
-  --accent-foreground: oklch(0.168 0.004 278);
-  
+  --primary: oklch(0.5 0.134 242.749); /* #D4A017 */
+  --primary-foreground: oklch(0.977 0.013 236.62);
+
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0); /* #7A7875 - Text Muted */
+
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+
   --destructive: oklch(0.577 0.245 27.325);
-  
+
   /* Custom Status Additions */
-  --success: oklch(0.740 0.140 152); /* #50C878 - Sync Green */
+  --success: oklch(0.74 0.14 152); /* #50C878 - Sync Green */
   --success-foreground: oklch(0.168 0.004 278);
 
-  --border: oklch(0.85 0.01 90);
-  --input: oklch(0.85 0.01 90);
-  --ring: oklch(0.725 0.165 85.2); /* Gold Mid */
-  
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0); /* Gold Mid */
+
   /* Retained from your original config */
   --chart-1: oklch(0.837 0.128 66.29);
   --chart-2: oklch(0.705 0.213 47.604);
@@ -48,76 +49,76 @@
   --chart-4: oklch(0.553 0.195 38.402);
   --chart-5: oklch(0.47 0.157 37.304);
   --radius: 0.625rem; /* Exactly matches your 10px rounded corners */
-  
-  --sidebar: oklch(0.924 0.023 94.6);
-  --sidebar-foreground: oklch(0.168 0.004 278);
-  --sidebar-primary: oklch(0.725 0.165 85.2);
-  --sidebar-primary-foreground: oklch(0.168 0.004 278);
-  --sidebar-accent: oklch(0.88 0.02 94.6);
-  --sidebar-accent-foreground: oklch(0.168 0.004 278);
-  --sidebar-border: oklch(0.85 0.01 90);
-  --sidebar-ring: oklch(0.725 0.165 85.2);
+
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.588 0.158 241.966);
+  --sidebar-primary-foreground: oklch(0.977 0.013 236.62);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
   /* DARK MODE (Exact Brand Board Match) */
-  --background: oklch(0.168 0.004 278); /* #0E0E10 - Obsidian */
-  --foreground: oklch(0.924 0.023 94.6); /* #F0EAD6 - Parchment */
-  
-  --card: oklch(0.197 0.004 278); /* #161618 - Card Dark */
-  --card-foreground: oklch(0.924 0.023 94.6);
-  
-  --popover: oklch(0.197 0.004 278);
-  --popover-foreground: oklch(0.924 0.023 94.6);
-  
+  --background: oklch(0.145 0 0); /* #0E0E10 - Obsidian */
+  --foreground: oklch(0.985 0 0); /* #F0EAD6 - Parchment */
+
+  --card: oklch(0.205 0 0); /* #161618 - Card Dark */
+  --card-foreground: oklch(0.985 0 0);
+
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+
   /* Primary mapped to Gold Light for pop/visibility */
-  --primary: oklch(0.835 0.150 91.5); /* #F5C842 - Gold Light */
-  --primary-foreground: oklch(0.168 0.004 278); 
-  
-  --secondary: oklch(0.235 0.005 278); /* #1E1E22 - Surface */
-  --secondary-foreground: oklch(0.924 0.023 94.6);
-  
-  --muted: oklch(0.235 0.005 278);
-  --muted-foreground: oklch(0.55 0.01 90); /* #7A7875 - Text Muted */
-  
-  --accent: oklch(0.235 0.005 278);
-  --accent-foreground: oklch(0.924 0.023 94.6);
-  
+  --primary: oklch(0.443 0.11 240.79); /* #F5C842 - Gold Light */
+  --primary-foreground: oklch(0.977 0.013 236.62);
+
+  --secondary: oklch(0.274 0.006 286.033); /* #1E1E22 - Surface */
+  --secondary-foreground: oklch(0.985 0 0);
+
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0); /* #7A7875 - Text Muted */
+
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+
   --destructive: oklch(0.704 0.191 22.216);
-  
+
   /* Custom Status Additions */
-  --success: oklch(0.740 0.140 152); /* #50C878 - Sync Green */
+  --success: oklch(0.74 0.14 152); /* #50C878 - Sync Green */
   --success-foreground: oklch(0.168 0.004 278);
 
-  --border: oklch(0.28 0.005 278); /* #2A2A30 - Dark Border */
-  --input: oklch(0.28 0.005 278);
-  --ring: oklch(0.835 0.150 91.5); /* Gold Light */
-  
-  --chart-1: oklch(0.835 0.150 91.5); /* Gold Light */
-  --chart-2: oklch(0.725 0.165 85.2); /* Gold Mid */
+  --border: oklch(1 0 0 / 10%); /* #2A2A30 - Dark Border */
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0); /* Gold Light */
+
+  --chart-1: oklch(0.837 0.128 66.29); /* Gold Light */
+  --chart-2: oklch(0.705 0.213 47.604); /* Gold Mid */
   --chart-3: oklch(0.646 0.222 41.116);
   --chart-4: oklch(0.553 0.195 38.402);
   --chart-5: oklch(0.47 0.157 37.304);
-  
-  --sidebar: oklch(0.197 0.004 278);
-  --sidebar-foreground: oklch(0.924 0.023 94.6);
-  --sidebar-primary: oklch(0.835 0.150 91.5);
-  --sidebar-primary-foreground: oklch(0.168 0.004 278);
-  --sidebar-accent: oklch(0.235 0.005 278);
-  --sidebar-accent-foreground: oklch(0.924 0.023 94.6);
-  --sidebar-border: oklch(0.28 0.005 278);
-  --sidebar-ring: oklch(0.835 0.150 91.5);
+
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.685 0.169 237.323);
+  --sidebar-primary-foreground: oklch(0.293 0.066 243.157);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @theme inline {
   /* Updated fonts for the brand */
-  --font-sans: 'Noto Sans', sans-serif;
-  --font-heading: 'Cormorant Garamond', serif;
-  
+  --font-sans: 'Inter Variable', sans-serif;
+  --font-heading: 'Inter Variable', sans-serif;
+
   /* Extended custom utility mapping */
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
-  
+
   /* Default Svelte-Shadcn Mappings */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -169,4 +170,8 @@
   html {
     @apply font-sans;
   }
+}
+
+@utility liquid-glass {
+  @apply border border-white/20 bg-white/10 shadow-lg backdrop-blur-sm transition-colors duration-300 hover:bg-white/20;
 }
